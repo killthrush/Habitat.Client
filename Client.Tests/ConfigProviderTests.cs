@@ -21,7 +21,7 @@ namespace Habitat.Client.Tests
         private const string TestTempPath = @"d:\foobar\jones";
         private const string TestAssemblyName = "Fake.Name";
 
-        private readonly CompareObjects _objectComparer = new CompareObjects();
+        private readonly CompareLogic _objectComparer = new CompareLogic();
         private Mock<IFileSystemFacade> _mockFileSystem;
         private HttpClient _mockConfigServiceHttpClient;
         private readonly MockFileSystemProvider _mockFileSystemProvider = new MockFileSystemProvider();
@@ -31,7 +31,7 @@ namespace Habitat.Client.Tests
         {
             _mockFileSystem = _mockFileSystemProvider.MockFileSystem;
             _mockFileSystem.Setup(x => x.GetTempDirectoryPath()).Returns(TestTempPath);
-            _mockConfigServiceHttpClient = HttpClientTestHelper.CreateStandardFakeClient(new MockConfigService());
+            _mockConfigServiceHttpClient = HttpClientTestHelper.CreateStandardFakeClient(new MockHabitatServer());
         }
 
         [TestCleanup]
@@ -67,7 +67,7 @@ namespace Habitat.Client.Tests
         [TestMethod]
         public void Config_should_always_come_from_server_if_it_returns_valid_data()
         {
-            ConfigRoot configFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot configFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             configFromMockCache.Data.Children[0].Value = "fromcache";
             CreateMockDurableCacheEntry(configFromMockCache);
 
@@ -82,7 +82,7 @@ namespace Habitat.Client.Tests
         [TestMethod]
         public void Config_should_always_come_from_cache_if_server_returns_invalid_data()
         {
-            ConfigRoot configFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot configFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             configFromMockCache.Data.Children[0].Value = "fromcache";
             CreateMockDurableCacheEntry(configFromMockCache);
 
@@ -104,13 +104,13 @@ namespace Habitat.Client.Tests
             IConfigProvider configProvider = testFactory.Create(TestComponentName, validators);
             try
             {
-                ConfigRoot config = configProvider.GetAndValidateConfiguration();
+                configProvider.GetAndValidateConfiguration();
                 Assert.Fail("Invalid configuration passed validation");
             }
             catch (UnableToAccessConfigurationException e)
             {
                 Assert.IsInstanceOfType(e.InnerException, typeof(ConfigValidationException), "Expected a ConfigValidationException to be thrown");
-                ConfigValidationException configValidationEx = e.InnerException as ConfigValidationException;
+                ConfigValidationException configValidationEx = (ConfigValidationException)e.InnerException;
                 Assert.IsTrue(Regex.IsMatch(configValidationEx.Message, "foo.N3"), "Missing invalid parameters from validation error message");
             }
         }
@@ -118,9 +118,9 @@ namespace Habitat.Client.Tests
         [TestMethod]
         public void Config_validation_exception_contains_missing_values_when_server_and_cache_config_is_invalid()
         {
-            ConfigRoot configFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot configFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             configFromMockCache.Data.Children[0].Value = "fromcache";
-            configFromMockCache.Data.Children.Add(new ConfigNode() { Name = "N4", Value = "V4" });
+            configFromMockCache.Data.Children.Add(new ConfigNode { Name = "N4", Value = "V4" });
             CreateMockDurableCacheEntry(configFromMockCache);
 
             var testFactory = new ConfigProviderFactory(TestAssemblyName, _mockConfigServiceHttpClient, _mockFileSystem.Object);
@@ -129,13 +129,13 @@ namespace Habitat.Client.Tests
             IConfigProvider configProvider = testFactory.Create(TestComponentName, validators);
             try
             {
-                ConfigRoot config = configProvider.GetAndValidateConfiguration();
+                configProvider.GetAndValidateConfiguration();
                 Assert.Fail("Invalid configuration passed validation");
             }
             catch (UnableToAccessConfigurationException e)
             {
                 Assert.IsInstanceOfType(e.InnerException, typeof(ConfigValidationException), "Expected a ConfigValidationException to be thrown");
-                ConfigValidationException configValidationEx = e.InnerException as ConfigValidationException;
+                ConfigValidationException configValidationEx = (ConfigValidationException)e.InnerException;
                 Assert.IsTrue(Regex.IsMatch(configValidationEx.Message, "foo.N3, foo.N4"), "Missing invalid parameters from validation error message");
             }
         }
@@ -143,7 +143,7 @@ namespace Habitat.Client.Tests
         [TestMethod]
         public void Config_should_always_come_from_cache_if_server_is_down()
         {
-            ConfigRoot configFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot configFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             configFromMockCache.Data.Children[0].Value = "fromcache";
             CreateMockDurableCacheEntry(configFromMockCache);
 
@@ -160,7 +160,7 @@ namespace Habitat.Client.Tests
         [ExpectedException(typeof(UnableToAccessConfigurationException))]
         public void Config_data_in_cache_should_always_be_validated()
         {
-            ConfigRoot configFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot configFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             configFromMockCache.Data.Children[0].Value = "fromcache";
             CreateMockDurableCacheEntry(configFromMockCache);
 
@@ -176,7 +176,7 @@ namespace Habitat.Client.Tests
         [TestMethod]
         public void Cache_should_always_be_updated_when_valid_data_is_retrieved_from_server()
         {
-            ConfigRoot originalConfigFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot originalConfigFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             originalConfigFromMockCache.Data.Children[0].Value = "fromcache";
             CreateMockDurableCacheEntry(originalConfigFromMockCache);
 
@@ -187,14 +187,14 @@ namespace Habitat.Client.Tests
 
             ConfigRoot updatedConfigFromMockCache = ReadMockDurableCacheEntry();
 
-            Assert.IsFalse(_objectComparer.Compare(originalConfigFromMockCache, updatedConfigFromMockCache));
-            Assert.IsTrue(_objectComparer.Compare(configFromProvider, updatedConfigFromMockCache));
+            Assert.IsFalse(_objectComparer.Compare(originalConfigFromMockCache, updatedConfigFromMockCache).AreEqual);
+            Assert.IsTrue(_objectComparer.Compare(configFromProvider, updatedConfigFromMockCache).AreEqual);
         }
 
         [TestMethod]
         public void Cache_should_never_be_updated_when_invalid_data_is_retrieved_from_server()
         {
-            ConfigRoot originalConfigFromMockCache = MockConfigService.GetConfigRoot(TestComponentName);
+            ConfigRoot originalConfigFromMockCache = MockHabitatServer.GetConfigRoot(TestComponentName);
             originalConfigFromMockCache.Data.Children[0].Value = "fromcache";
             CreateMockDurableCacheEntry(originalConfigFromMockCache);
 
@@ -206,8 +206,8 @@ namespace Habitat.Client.Tests
 
             ConfigRoot updatedConfigFromMockCache = ReadMockDurableCacheEntry();
 
-            Assert.IsTrue(_objectComparer.Compare(originalConfigFromMockCache, updatedConfigFromMockCache));
-            Assert.IsTrue(_objectComparer.Compare(configFromProvider, originalConfigFromMockCache));
+            Assert.IsTrue(_objectComparer.Compare(originalConfigFromMockCache, updatedConfigFromMockCache).AreEqual);
+            Assert.IsTrue(_objectComparer.Compare(configFromProvider, originalConfigFromMockCache).AreEqual);
         }
 
         [TestMethod]

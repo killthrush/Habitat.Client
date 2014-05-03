@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace Habitat.Client
 {
     /// <summary>
-    /// Concrete class that provides access to the config service host over HTTP
+    /// Concrete class that provides access to the Habitat Server over HTTP
     /// </summary>
     internal class ConfigServiceProvider : IConfigServiceProvider
     {
@@ -18,7 +18,7 @@ namespace Habitat.Client
         private readonly string _componentName;
 
         /// <summary>
-        /// HttpClient implementation used to communicate with the Config Service
+        /// HttpClient implementation used to communicate with the Habitat Server
         /// </summary>
         private readonly HttpClient _client;
 
@@ -26,7 +26,7 @@ namespace Habitat.Client
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
         /// <param name="componentName">The name of the component for which config is being read</param>
-        /// <param name="client">HttpClient implementation used to communicate with the Config Service</param>
+        /// <param name="client">HttpClient implementation used to communicate with the Habitat Server</param>
         public ConfigServiceProvider(string componentName, HttpClient client)
         {
             _componentName = componentName;
@@ -34,10 +34,10 @@ namespace Habitat.Client
         }
 
         /// <summary>
-        /// Makes a call to retrieve config data from the Config Service.
+        /// Makes a call to retrieve config data from the Habitat Server.
         /// This call blocks the executing thread until a response is given.
         /// </summary>
-        /// <returns>The response from the Config Service</returns>
+        /// <returns>The response from the Habitat Server</returns>
         public ConfigServiceResponse GetConfig()
         {
             var serviceResponse = new ConfigServiceResponse
@@ -57,7 +57,7 @@ namespace Habitat.Client
         }
 
         /// <summary>
-        /// Helper method to handle all responses from config service (including errors) in a consistent manner
+        /// Helper method to handle all responses from Habitat Server (including errors) in a consistent manner
         /// </summary>
         /// <param name="task">The response task from the HttpClient</param>
         private ConfigServiceResponse HandleConfigServiceResponse(Task<HttpResponseMessage> task)
@@ -96,7 +96,7 @@ namespace Habitat.Client
         /// Helper method to parse server responses as the appropriate JSON type and format for readability.
         /// </summary>
         /// <typeparam name="T">The expected type of JSON being returned (e.g. array)</typeparam>
-        /// <param name="readTask">The config service response task that provides the JSON values</param>
+        /// <param name="readTask">The Habitat Server response task that provides the JSON values</param>
         private ConfigServiceResponse ReadConfigServiceJson<T>(Task<T> readTask)
             where T : class
         {

@@ -12,7 +12,7 @@ namespace Habitat.Client.Tests.TestClasses
         /// </summary>
         public override string ApplicationComponentName
         {
-            get { return "ProTeck.Config.Client.Test"; }
+            get { return "Habitat.Client.Test"; }
         }
 
         /// <summary>

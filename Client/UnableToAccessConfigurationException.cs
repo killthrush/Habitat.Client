@@ -5,7 +5,7 @@ namespace Habitat.Client
 {
     /// <summary>
     /// Exception thrown in the event that no valid configuration could be loaded,
-    /// either from Config Service of from the cache.  This is generally going to be a fatal error.  Without configuration, an application can't function.
+    /// either from Habitat Server or from the cache.  This is generally going to be a fatal error.  Without configuration, an application can't function.
     /// </summary>
     public class UnableToAccessConfigurationException : Exception
     {

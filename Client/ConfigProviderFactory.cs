@@ -21,7 +21,7 @@ namespace Habitat.Client
         public const string DefaultServerUrl = "http://HabitatServer/Habitat.Server.Data/";
 
         /// <summary>
-        /// HTTP client implementation that will be used internally by the ConfigProvider to talk to Config Service
+        /// HTTP client implementation that will be used internally by the ConfigProvider to talk to Habitat Server
         /// </summary>
         private readonly HttpClient _configServiceHttpClient;
 
@@ -39,7 +39,7 @@ namespace Habitat.Client
         /// Initializes a new instance of the <see cref="ConfigProviderFactory"/> class.
         /// </summary>
         /// <param name="applicationAssemblyName">A string containing the assembly name of the application using the Factory</param>
-        /// <param name="configServiceHttpClient">HTTP client implementation that will be used internally by the ConfigProvider to talk to Config Service</param>
+        /// <param name="configServiceHttpClient">HTTP client implementation that will be used internally by the ConfigProvider to talk to Habitat Server</param>
         /// <param name="fileSystem">A wrapper for filesystem access.  This is used by the ConfigProvider to manage local storage of config data</param>
         internal ConfigProviderFactory(string applicationAssemblyName = null, HttpClient configServiceHttpClient = null, IFileSystemFacade fileSystem = null)
         {

@@ -13,9 +13,9 @@ using Newtonsoft.Json;
 namespace Habitat.Client.Tests
 {
     /// <summary>
-    /// Mock request handler that acts like Config Service
+    /// Mock request handler that acts like Habitat Server
     /// </summary>
-    public class MockConfigService : FakeHttpRequestHandler
+    public class MockHabitatServer : FakeHttpRequestHandler
     {
         private const string JsonMediaType = "application/json";
         private const string ComponentNameMatchPattern = @"http://fake/Config/(\w+)/?$";

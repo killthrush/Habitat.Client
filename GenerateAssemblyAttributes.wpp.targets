@@ -104,21 +104,4 @@
     <exec command ="copy /Y &quot;$(ProjectDir)_AssemblyInfo.cs&quot; &quot;$(ProjectDir)Properties\AssemblyInfo.cs&quot; "/>
   </Target>
 
-
-  <Target Name="Nuget">
-
-    <Message Text="Not batched: @(Nugetter->'%(Identity)')"/>
-    <Message Text="========================================"/>
-    <Message Text="Batched: %(Nugetter.Identity)"/>
-
-    <Message Text="@(Nugetter->'%(Meta)')"/>
-
-    <MakeDir Directories="C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport" Condition="!Exists('C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport')" />
-    <MakeDir Directories="C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport\lib" Condition="!Exists('C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport\lib')" />
-    <!--<MakeDir Directories="c:\temp\Message2.0\NuGetPackage" Condition="!Exists('c:\temp\Message2.0\NuGetPackage')" />-->
-    <Exec Command="del /F /Q C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport\*.nupkg " />
-    <Message Text="del /F /Q C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport\*.nupkg" />
-    <Exec Command="copy /y &quot;%(Nugetter.Identity)&quot; &quot;C:\Builds\ProteckIT\$(BuildDefName)\NuGetPackageSupport\lib&quot;" />
-  </Target>
-
 </Project>

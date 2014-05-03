@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Habitat.Client;
-
-namespace NugetBuild
+﻿namespace NugetBuild
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
         }
     }

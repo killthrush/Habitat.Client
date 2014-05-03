@@ -5,7 +5,7 @@ using Habitat.Core;
 namespace Habitat.Client
 {
     /// <summary>
-    /// Simple wrapper for data returned from Config service.
+    /// Simple wrapper for data returned from Habitat Server.
     /// </summary>
     internal class ConfigServiceResponse
     {

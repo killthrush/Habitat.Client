@@ -80,7 +80,7 @@
     <Compile Include="TestClasses\CompositeConfigObject.cs" />
     <Compile Include="ConfigServiceProviderTests.cs" />
     <Compile Include="ExtensionsTests.cs" />
-    <Compile Include="MockConfigService.cs" />
+    <Compile Include="MockHabitatServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigProviderTests.cs" />
     <Compile Include="TestClasses\SampleApplicationConfig.cs" />

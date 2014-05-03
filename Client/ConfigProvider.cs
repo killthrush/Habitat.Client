@@ -6,8 +6,8 @@ using Habitat.Core;
 namespace Habitat.Client
 {
     /// <summary>
-    /// Core class that knows how to connect to a config service host, read its stored values,
-    /// and cache the responses in case a connection to the config service host is unavailable.
+    /// Core class that knows how to connect to a Habitat Server, read its stored values,
+    /// and cache the responses in case a connection to the server is unavailable.
     /// </summary>
     internal class ConfigProvider : IConfigProvider
     {
@@ -22,7 +22,7 @@ namespace Habitat.Client
         private readonly Dictionary<string, Func<string, bool>> _validationHandlers;
 
         /// <summary>
-        /// Instance of a class that will communicate with the Config Service
+        /// Instance of a class that will communicate with the Habitat Server
         /// </summary>
         private readonly IConfigServiceProvider _serviceProvider;
 
@@ -36,8 +36,8 @@ namespace Habitat.Client
         /// </summary>
         /// <param name="componentName">The name of the application this Provider is responsible for.</param>
         /// <param name="validationHandlers">The set of all validation methods that will be run for each unique config value</param>
-        /// <param name="serviceProvider">The class that will handle the actual communication with the config service</param>
-        /// <param name="cacheProvider">The class that will make sure that this Provider can store config data locally without hitting the Config Service constantly</param>
+        /// <param name="serviceProvider">The class that will handle the actual communication with the Habitat Server</param>
+        /// <param name="cacheProvider">The class that will make sure that this Provider can store config data locally without hitting the Habitat Server constantly</param>
         internal ConfigProvider(string componentName, Dictionary<string, Func<string, bool>> validationHandlers, IConfigServiceProvider serviceProvider, IRepository<IJsonEntity<ConfigRoot>> cacheProvider)
         {
             _componentName = componentName;
@@ -140,11 +140,10 @@ namespace Habitat.Client
                 }
 
                 bool hasValidConfigFromCache = false;
-                Dictionary<string, bool> cachedConfigValidationResults = new Dictionary<string, bool>();
                 configRoot = LoadConfigFromCache();
                 if (configRoot != null)
                 {
-                    cachedConfigValidationResults = Validate(configRoot.Data.ToDictionary());
+                    Dictionary<string, bool> cachedConfigValidationResults = Validate(configRoot.Data.ToDictionary());
                     hasValidConfigFromCache = (cachedConfigValidationResults.Count(x => x.Value == false) == 0);
 
                     // Only report the cache errors if the server data was missing or valid

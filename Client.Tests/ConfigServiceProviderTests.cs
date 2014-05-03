@@ -15,7 +15,7 @@ namespace Habitat.Client.Tests
         private const string ResourceUrlTemplate = "Config/{0}";
         private const string ResourceName = "foo";
 
-        private readonly CompareObjects _objectComparer = new CompareObjects();
+        private readonly CompareLogic _objectComparer = new CompareLogic();
 
         [ClassInitialize]
         public static void FixtureSetUp(TestContext context)
@@ -27,10 +27,10 @@ namespace Habitat.Client.Tests
         [TestMethod]
         public void Test_provider_behavior_when_config_service_returns_valid_data()
         {
-            ConfigRoot testConfig = MockConfigService.GetConfigRoot(ResourceName);
+            ConfigRoot testConfig = MockHabitatServer.GetConfigRoot(ResourceName);
             DateTime expectedDate = testConfig.LastModified;
 
-            HttpClient mockClient = HttpClientTestHelper.CreateStandardFakeClient(new MockConfigService());
+            HttpClient mockClient = HttpClientTestHelper.CreateStandardFakeClient(new MockHabitatServer());
             var provider = new ConfigServiceProvider(ResourceName, mockClient);
 
             ConfigServiceResponse response = provider.GetConfig();
@@ -43,13 +43,13 @@ namespace Habitat.Client.Tests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.IsNull(response.Exception);
             Assert.IsNotNull(response.Config);
-            Assert.IsTrue(_objectComparer.Compare(testConfig, response.Config));
+            Assert.IsTrue(_objectComparer.Compare(testConfig, response.Config).AreEqual);
         }
 
         [TestMethod]
         public void Test_provider_behavior_when_config_service_returns_404()
         {
-            HttpClient mockClient = HttpClientTestHelper.CreateStandardFakeClient(new MockConfigService());
+            HttpClient mockClient = HttpClientTestHelper.CreateStandardFakeClient(new MockHabitatServer());
             var provider = new ConfigServiceProvider("foo2", mockClient);
 
             ConfigServiceResponse response = provider.GetConfig();
