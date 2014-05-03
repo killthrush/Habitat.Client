@@ -72,7 +72,7 @@ namespace Habitat.Client.Tests
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname(null));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname(string.Empty));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("   "));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123"));
+            Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123"));  // This test breaks when installing the .NET 4.5 runtime.  
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("foobar "));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123.123"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123.123.123"));
@@ -210,55 +210,6 @@ namespace Habitat.Client.Tests
             Assert.IsTrue(SampleApplicationConfigProvider.IsWellFormedXml(testDoc.OuterXml));
             Assert.IsFalse(SampleApplicationConfigProvider.IsWellFormedXml(long.MaxValue.ToString()));
             Assert.IsFalse(SampleApplicationConfigProvider.IsWellFormedXml(AppDomain.CurrentDomain.BaseDirectory));
-        }
-
-        [TestMethod]
-        public void Test_input_queue_validation()
-        {
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.Junction_Input@localhost"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.Junction_input@localhost"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.Junction_input@192.168.1.1"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.Junction_input@qa-app1"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.junction_InPuT"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.Junction_pubqueue@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck.Junction.input@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidInputQueueName("ProTeck_Input"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidInputQueueName("Junction_Input@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidInputQueueName(string.Empty));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidInputQueueName(null));
-        }
-
-        [TestMethod]
-        public void Test_error_queue_validation()
-        {
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.Junction_Error@localhost"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.Junction_error@localhost"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.Junction_error@192.168.1.1"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.Junction_error@qa-app1"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.junction_ErRoR"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.Junction_errorqueue@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck.Junction.error@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidErrorQueueName("ProTeck_Error"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidErrorQueueName("Junction_Error@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidErrorQueueName(string.Empty));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidErrorQueueName(null));
-        }
-
-        [TestMethod]
-        public void Test_subscription_queue_validation()
-        {
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction_Subscriptions@localhost"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction_subscriptions@localhost"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction_subscriptions@192.168.1.1"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction_subscriptions@qa-app1"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.junction_SuBsCrIpTiOns"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction_pubqueue@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction.subscriptions@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck.Junction_subscription@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("ProTeck_Subscriptions"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName("Junction_Subscriptions@localhost"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName(string.Empty));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidSubscriptionQueueName(null));
         }
     }
 }

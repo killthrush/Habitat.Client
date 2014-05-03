@@ -12,14 +12,14 @@ using ProTeck.Config.Dto.V1;
 namespace Habitat.Client
 {
     /// <summary>
-    /// Communicates with Pro Teck Config Service and provides access to strongly typed configuration object. 
+    /// Communicates with Habitat Server and provides access to strongly typed configuration object. 
     /// This is an abstract class.
     /// </summary>
     /// <typeparam name="T">The type of the strongly typed configuration package</typeparam>
     public abstract class ApplicationConfigProviderBase<T> where T : class, new()
     {
         /// <summary>
-        /// The name of the "special" environment config component.  This is shared by all applications.
+        /// The name of the "special" environment config component.  This is intended to be shared by all applications.
         /// </summary>
         private const string EnvironmentComponentName = "Environment";
 
@@ -298,39 +298,6 @@ namespace Habitat.Client
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Returns true if the supplied value is a Pro Teck standard input queue name
-        /// </summary>
-        /// <param name="configValue">The value to check</param>
-        /// <returns>True if the input is a properly formatted input queue name, else false</returns>
-        /// <remarks>This will not check to see if the queue actually exists, only that it's name is formatted properly.  This method will not throw exceptions.</remarks>
-        protected internal static bool IsValidInputQueueName(object configValue)
-        {
-            return configValue != null && Regex.IsMatch(configValue.ToString(), @"^[a-zA-Z0-9\.]+.junction_input(@[a-zA-Z0-9\-\.]+)?$", RegexOptions.IgnoreCase);
-        }
-
-        /// <summary>
-        /// Returns true if the supplied value is a Pro Teck standard error queue name
-        /// </summary>
-        /// <param name="configValue">The value to check</param>
-        /// <returns>True if the input is a properly formatted error queue name, else false</returns>
-        /// <remarks>This will not check to see if the queue actually exists, only that it's name is formatted properly.  This method will not throw exceptions.</remarks>
-        protected internal static bool IsValidErrorQueueName(object configValue)
-        {
-            return configValue != null && Regex.IsMatch(configValue.ToString(), @"^[a-zA-Z0-9\.]+.junction_error(@[a-zA-Z0-9\-\.]+)?$", RegexOptions.IgnoreCase);
-        }
-
-        /// <summary>
-        /// Returns true if the supplied value is a Pro Teck standard subscription queue name
-        /// </summary>
-        /// <param name="configValue">The value to check</param>
-        /// <returns>True if the input is a properly formatted subscription queue name, else false</returns>
-        /// <remarks>This will not check to see if the queue actually exists, only that it's name is formatted properly.  This method will not throw exceptions.</remarks>
-        protected internal static bool IsValidSubscriptionQueueName(object configValue)
-        {
-            return configValue != null && Regex.IsMatch(configValue.ToString(), @"^[a-zA-Z0-9\.]+.junction_subscriptions(@[a-zA-Z0-9\-\.]+)?$", RegexOptions.IgnoreCase);
         }
 
         /// <summary>

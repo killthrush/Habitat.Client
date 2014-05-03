@@ -14,13 +14,13 @@ namespace Habitat.Client
     internal class ConfigProviderFactory : IConfigProviderFactory
     {
         /// <summary>
-        /// Default URL used to access the config service.  It does not include the component name - this is included in the requests sent by ConfigServiceProvider.
+        /// Default URL used to access the Habitat server.  It does not include the component name - this is included in the requests sent by ConfigServiceProvider.
         /// </summary>
         /// <remarks>
         /// This URL adopts a fixed convention, mainly because it is the basis for all other environment config settings. 
-        /// This URL must resolve properly on all Pro Teck application servers, including development workstations.
+        /// This URL must resolve properly on all machines in the domain.
         /// </remarks>
-        public const string DefaultConfigServiceUrl = "http://ConfigServer/ProTeck.Config.Data/";
+        public const string DefaultServerUrl = "http://HabitatServer/Habitat.Server.Data/";
 
         /// <summary>
         /// HTTP client implementation that will be used internally by the ConfigProvider to talk to Config Service
@@ -51,7 +51,7 @@ namespace Habitat.Client
             if (_configServiceHttpClient == null)
             {
                 _configServiceHttpClient = new HttpClient();
-                _configServiceHttpClient.BaseAddress = new Uri(DefaultConfigServiceUrl);
+                _configServiceHttpClient.BaseAddress = new Uri(DefaultServerUrl);
             }
         }
 
