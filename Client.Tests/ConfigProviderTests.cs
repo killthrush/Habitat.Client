@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using Habitat.Core;
+using Habitat.Core.TestingLibrary;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ProTeck.Config.Dto.V1;
-using ProTeck.Core.Facades;
-using ProTeck.Core.TestingLibrary;
 
 namespace Habitat.Client.Tests
 {

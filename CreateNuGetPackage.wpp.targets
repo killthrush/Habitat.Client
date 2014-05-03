@@ -2,10 +2,10 @@
 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks" />
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <Publish>false</Publish>
     <NuGetUrl>http://appserver/Nuget/</NuGetUrl>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <Target Name="CreateNuGetPackage">
     <PropertyGroup>
@@ -23,7 +23,6 @@
                                            XPath="/Versions/Version[last()]/@number" Condition="Exists('$(SolutionDir)\version.xml')">
       <Output PropertyName="ComponentBaseVersion" TaskParameter="Value" />
     </MSBuild.ExtensionPack.Xml.XmlFile>
-
     <CreateItem Include="$(MSBuildProjectDirectory)\*.nuspec">
       <Output TaskParameter="Include" ItemName="NuspecFile" />
     </CreateItem>
@@ -39,7 +38,7 @@
       <Output TaskParameter="Include" ItemName="PackageFile" />
     </CreateItem>
     <!--If Publish=true push package to server-->
-    <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="nuget.exe push @(PackageFile) -ApiKey 123 -s $(NuGetUrl)" Condition="$(Publish)==true" />
+    <!--<Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="nuget.exe push @(PackageFile) -ApiKey 123 -s $(NuGetUrl)" Condition="$(Publish)==true" />-->
   </Target>
 </Project>
 

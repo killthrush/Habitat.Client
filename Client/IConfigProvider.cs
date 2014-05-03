@@ -1,4 +1,4 @@
-﻿using ProTeck.Config.Dto.V1;
+﻿using Habitat.Core;
 
 namespace Habitat.Client
 {

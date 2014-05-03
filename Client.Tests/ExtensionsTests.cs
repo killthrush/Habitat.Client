@@ -5,8 +5,6 @@ namespace Habitat.Client.Tests
     [TestClass]
     public class ExtensionsTests
     {
-        #region TryGetProperty Tests
-
         [TestMethod]
         public void Get_existing_property_with_expected_type()
         {
@@ -43,10 +41,6 @@ namespace Habitat.Client.Tests
             Assert.AreEqual(0, length);
         }
 
-        #endregion TryGetProperty Tests
-
-        #region TrySetProperty Tests
-
         [TestMethod]
         public void Set_existing_property_with_expected_type()
         {
@@ -82,15 +76,9 @@ namespace Habitat.Client.Tests
             Assert.IsFalse(testObject.TrySetProperty("Length", length));
         }
 
-        #endregion TrySetProperty Tests
-
-        #region Types
-
         internal class PropertyTestClass
         {
             public int Length { get; set; }
         }
-
-        #endregion Types
     }
 }

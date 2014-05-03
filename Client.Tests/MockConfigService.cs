@@ -6,9 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Habitat.Core;
+using Habitat.Core.TestingLibrary;
 using Newtonsoft.Json;
-using ProTeck.Config.Dto.V1;
-using ProTeck.Core.TestingLibrary;
 
 namespace Habitat.Client.Tests
 {

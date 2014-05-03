@@ -2,8 +2,8 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Habitat.Core;
 using Newtonsoft.Json;
-using ProTeck.Config.Dto.V1;
 
 namespace Habitat.Client
 {
@@ -93,7 +93,7 @@ namespace Habitat.Client
         }
 
         /// <summary>
-        /// Helper method to parse config service responses as the appropriate JSON type and format for readability.
+        /// Helper method to parse server responses as the appropriate JSON type and format for readability.
         /// </summary>
         /// <typeparam name="T">The expected type of JSON being returned (e.g. array)</typeparam>
         /// <param name="readTask">The config service response task that provides the JSON values</param>

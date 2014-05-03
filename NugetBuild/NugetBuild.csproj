@@ -64,7 +64,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">
       <Project>{46BE8490-902C-4BE2-8EFF-048D7E304105}</Project>
-      <Name>DataClient</Name>
+      <Name>Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

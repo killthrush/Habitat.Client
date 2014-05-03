@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Net;
 using System.Collections.Generic;
+using Habitat.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Habitat.Client.Tests.TestClasses;
-using ProTeck.Config.Dto.V1;
-using ProTeck.Core.Repository;
 
 namespace Habitat.Client.Tests
 {
@@ -23,8 +22,6 @@ namespace Habitat.Client.Tests
             _expectedConfig = CreateExpectedConfig();
             _applicationConfigProvider = new SampleApplicationConfigProvider(null);
         }
-
-        #region Tests
 
         [TestMethod]
         public void Missing_application_configuration_should_throw_typed_exception()
@@ -99,10 +96,6 @@ namespace Habitat.Client.Tests
             Assert.AreEqual(_expectedConfig.ConfigObject.Name, actualConfig.ConfigObject.Name);
             Assert.AreEqual(_expectedConfig.ConfigObject.Number, actualConfig.ConfigObject.Number);
         }
-
-        #endregion Tests
-
-        #region Helper Methods
 
         /// <summary>
         /// Builds a factory that knows how to create a Config Provider that acts like the real thing, but doesn't use real caches or service calls.
@@ -212,7 +205,5 @@ namespace Habitat.Client.Tests
                               };
             return config;
         }
-
-        #endregion Helper Methods
     }
 }

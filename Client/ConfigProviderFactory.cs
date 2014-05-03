@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using ProTeck.Config.Dto.V1;
-using ProTeck.Core.Facades;
-using ProTeck.Core.Repository;
+using Habitat.Core;
 
 namespace Habitat.Client
 {

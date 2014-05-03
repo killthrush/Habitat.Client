@@ -2,30 +2,20 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks.Schedulers;
+using Habitat.Core;
+using Habitat.Core.TestingLibrary;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProTeck.Config.Dto.V1;
-using ProTeck.Core.TestingLibrary;
 
 namespace Habitat.Client.Tests
 {
     [TestClass]
     public class ConfigServiceProviderTests
     {
-        #region Constants
-
         private const string ResourceUrlTemplate = "Config/{0}";
         private const string ResourceName = "foo";
 
-        #endregion Constants
-
-        #region Fields
-
         private readonly CompareObjects _objectComparer = new CompareObjects();
-
-        #endregion Fields
-
-        #region Setup / Teardown
 
         [ClassInitialize]
         public static void FixtureSetUp(TestContext context)
@@ -33,10 +23,6 @@ namespace Habitat.Client.Tests
             // This hack uses a TPL extension that forces tasks to run on a single thread without needing to change any application code
             new CurrentThreadTaskScheduler().SetDefaultScheduler();
         }
-
-        #endregion Setup / Teardown
-
-        #region Tests
 
         [TestMethod]
         public void Test_provider_behavior_when_config_service_returns_valid_data()
@@ -168,7 +154,5 @@ namespace Habitat.Client.Tests
             Assert.AreEqual(typeof(UnableToAccessConfigurationException), response.Exception.GetType());
             Assert.AreEqual(typeof(AggregateException), response.Exception.InnerException.GetType());
         }
-
-        #endregion Tests
     }
 }

@@ -7,7 +7,7 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
-using ProTeck.Config.Dto.V1;
+using Habitat.Core;
 
 namespace Habitat.Client
 {
