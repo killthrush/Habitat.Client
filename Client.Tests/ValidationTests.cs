@@ -56,14 +56,19 @@ namespace Habitat.Client.Tests
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp(null));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp(string.Empty));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp("   "));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp("123"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp("255.255.255.256"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp("abc"));
             Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp(" 123.123.123.123 "));
             Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp("0.0.0.0"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostnameOrIp(" 0.0.-1.0"));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostname(" www.yahoo.com "));
-            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostname(" r2d2.protk.com"));
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp(" www.yahoo.com "));
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp(" r2d2.protk.com"));
+
+            // The following tests will fail if you do not have the .NET 4.5 runtime installed. There are breaking changes made to .NET 4.0!
+            // In this case, an IP address like "123" will be interpreted as "123.0.0.0", a valid IP.  This is different behavior than pre-4.5.
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp("123"));
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp("123.123"));
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidHostnameOrIp("123.123.123"));
         }
 
         [TestMethod]
@@ -72,8 +77,8 @@ namespace Habitat.Client.Tests
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname(null));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname(string.Empty));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("   "));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123"));  // This test breaks when installing the .NET 4.5 runtime.  
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("foobar "));
+            Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123.123"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123.123.123"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidHostname("123.123.123.123"));
@@ -89,9 +94,6 @@ namespace Habitat.Client.Tests
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress(null));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress(string.Empty));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress("   "));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress("123"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress("123.123"));
-            Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress("123.123.123"));
             Assert.IsTrue(SampleApplicationConfigProvider.IsValidIpAddress("123.123.123.123"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress("256.255.255"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress("255.255.255.256"));
@@ -99,6 +101,12 @@ namespace Habitat.Client.Tests
             Assert.IsTrue(SampleApplicationConfigProvider.IsValidIpAddress(" 123.123.123.123 "));
             Assert.IsTrue(SampleApplicationConfigProvider.IsValidIpAddress("0.0.0.0"));
             Assert.IsFalse(SampleApplicationConfigProvider.IsValidIpAddress(" 0.0.-1.0"));
+
+            // The following tests will fail if you do not have the .NET 4.5 runtime installed. There are breaking changes made to .NET 4.0!
+            // In this case, an IP address like "123" will be interpreted as "123.0.0.0", a valid IP.  This is different behavior than pre-4.5.
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidIpAddress("123"));
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidIpAddress("123.123"));
+            Assert.IsTrue(SampleApplicationConfigProvider.IsValidIpAddress("123.123.123"));
         }
 
         [TestMethod]
