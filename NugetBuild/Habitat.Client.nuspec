@@ -16,7 +16,6 @@
     <tags>Habitat Library</tags>
     <dependencies>
       <dependency id="Habitat.Core" version="[1.0,2.0)" />
-      <dependency id="System.Net.Http" version="[2.0.20710.0]" />
     </dependencies>
   </metadata>
   <files>

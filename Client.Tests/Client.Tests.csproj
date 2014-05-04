@@ -43,6 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Habitat.Core">
+      <HintPath>..\packages\Habitat.Core.1.0.0\lib\net40\Habitat.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Habitat.Core.TestingLibrary">
+      <HintPath>..\packages\Habitat.Core.TestingLibrary.1.0.0\lib\net40\Habitat.Core.TestingLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="KellermanSoftware.Compare-NET-Objects">
       <HintPath>..\packages\CompareNETObjects.2.01.0.0\lib\net40\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
@@ -69,6 +75,12 @@
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
+    <Reference Include="SystemInterface">
+      <HintPath>..\packages\SystemWrapper-sn.0.5.3\lib\net40\SystemInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemWrapper">
+      <HintPath>..\packages\SystemWrapper-sn.0.5.3\lib\net40\SystemWrapper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -91,14 +103,6 @@
     <ProjectReference Include="..\Client\Client.csproj">
       <Project>{46BE8490-902C-4BE2-8EFF-048D7E304105}</Project>
       <Name>Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.TestingLibrary\Core.TestingLibrary.csproj">
-      <Project>{FD698D8E-81C4-493A-8FB1-89B3EB6FBC47}</Project>
-      <Name>Core.TestingLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{B2E32B2A-22CB-4A34-A146-E68F6EE414CB}</Project>
-      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

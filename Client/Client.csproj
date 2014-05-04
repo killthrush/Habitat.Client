@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Habitat.Core">
+      <HintPath>..\packages\Habitat.Core.1.0.0\lib\net40\Habitat.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -56,6 +59,12 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="SystemInterface">
+      <HintPath>..\packages\SystemWrapper-sn.0.5.3\lib\net40\SystemInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemWrapper">
+      <HintPath>..\packages\SystemWrapper-sn.0.5.3\lib\net40\SystemWrapper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConfigProviderBase.cs" />
@@ -71,12 +80,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectAssemblyInfo.cs" />
     <Compile Include="UnableToAccessConfigurationException.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{B2E32B2A-22CB-4A34-A146-E68F6EE414CB}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
