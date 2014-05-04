@@ -33,7 +33,7 @@
     </CreateItem>
     <Delete Files="@(OldPackageFiles)" />
     <!--Create nupkg file-->
-    <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="nuget.exe pack @(NuspecFile) -Properties version=$(ComponentBaseVersion);binfolder=$(BinFolder)" />
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)" Command="..\.nuget\nuget.exe pack @(NuspecFile) -Properties version=$(ComponentBaseVersion);binfolder=$(BinFolder)" />
     <CreateItem Include="$(MSBuildProjectDirectory)\*.nupkg">
       <Output TaskParameter="Include" ItemName="PackageFile" />
     </CreateItem>
